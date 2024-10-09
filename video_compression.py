@@ -53,7 +53,7 @@ def analyze_video_compression(original_video, compressed_video, plot_path):
     plt.grid()
     plt.scatter(max_difference_time * fps, max_difference, color='red', label=f'Макс. разница на {max_difference_time} секунде')
     plt.legend()
-    plt.show()
+    plt.savefig(plot_path)
     print("Построен график")
 
 
