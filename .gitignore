@@ -1,2 +1,7 @@
 .*
+!.gitignore
+!.dockerignore
+/plots
+/uploads
+/compressed
 __pycache__
