@@ -1,14 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Video</title>
-  </head>
-  <body>
-    <h1>Upload Video for Compression</h1>
-    <form action="/" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" accept="video/*" required>
-      <input type="submit" value="Upload and Compress">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .upload-box {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .loading {
+            display: none;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+    <script>
+        function handleFileInput() {
+            const input = document.getElementById('file-input');
+            const fileNameDisplay = document.getElementById('file-name-display');
+            if (input.files.length > 0) {
+                fileNameDisplay.textContent = "Файл: " + input.files[0].name;
+            } else {
+                fileNameDisplay.textContent = "";
+            }
+        }
+
+        function handleFormSubmit(event) {
+            const loadingMessage = document.getElementById('loading-message');
+            loadingMessage.style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <h1>Загрузка видео для сжатия</h1>
+    <form action="/" method="post" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
+        <div class="upload-box" onclick="document.getElementById('file-input').click();">
+            Нажмит сюда для загрузки файла
+            <input type="file" name="file" id="file-input" style="display:none;" accept="video/*" onchange="handleFileInput()">
+            <div id="file-name-display"></div>
+        </div>
+        <button type="submit" class="button">Загрузить и сжать</button>
     </form>
-  </body>
+    <div id="loading-message" class="loading">Ваше видео находится в обработке. Пожалуйста, подождите...</div>
+</body>
 </html>

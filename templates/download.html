@@ -1,12 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download Results</title>
-  </head>
-  <body>
-    <h1>Download your files</h1>
-    <a href="{{ url_for('get_file', filename=filename) }}">Download Compressed Video</a><br>
-    <a href="{{ url_for('get_plot', plot_filename=plot_filename) }}">Download Compression Analysis Plot</a>
-  </body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Файл успешно сжат!</h1>
+    <p>Загрузите ваши файлы ниже:</p>
+    <a href="{{ url_for('get_file', filename=filename) }}" class="button">Скачать сжатое видео</a>
+    <a href="{{ url_for('get_plot', plot_filename=plot_filename) }}" class="button">Скачать график анализа</a>
+</body>
 </html>
