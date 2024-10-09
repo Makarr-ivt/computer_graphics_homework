@@ -11,7 +11,6 @@ def get_average_color(frame_data):
 
 def analyze_video_compression(original_video, compressed_video, plot_path):
     """Сравнивает оригинальное и сжатое видео по кадрам, строит график разницы"""
-    print("Анализ потерь при сжатии видео (может занять некоторое время)")
     # Получаем информацию о видео
     probe_original = ffmpeg.probe(original_video)
     num_frames = int(probe_original['streams'][0]['nb_frames'])
@@ -65,11 +64,9 @@ def analyze_video_compression(original_video, compressed_video, plot_path):
     plt.scatter(max_difference_time * fps, max_difference, color='red', label=f'Макс. разница на {max_difference_time} секунде')
     plt.legend()
     plt.savefig(plot_path)
-    print("Построен график")
 
 def compress_video(filename: str, output_filename: str):
     """Из видеофайла filename делает сжатое видео output_filename с пониженным битрейтом до 2 Мбит/сек"""
-    print("Видео Сжимается")
     input_stream = ffmpeg.input(filename)
     # Применение видеофильтра для изменения контрастности
     video_stream = input_stream.filter('eq', contrast=5.0)
@@ -86,4 +83,3 @@ def compress_video(filename: str, output_filename: str):
         )
         .run()
     )
-    print("Видео сжато")
