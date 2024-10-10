@@ -1,16 +1,16 @@
 FROM python:3.11-alpine
 
-RUN apk add --no-cache ffmpeg
-
-# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем файлы с зависимостями
+RUN apk add --no-cache ffmpeg
+
 COPY requirements.txt .
 
-# Устанавливаем зависимости
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["python", "main.py"]
+ENV FLASK_APP=main.py
+
+# Запуск приложения
+CMD ["flask", "run", "--host=0.0.0.0"]
