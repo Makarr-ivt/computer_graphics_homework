@@ -38,6 +38,19 @@
             color: #555;
         }
     </style>
+</head>
+<body>
+    <h1>Загрузка видео для сжатия</h1>
+    <form action="/" method="post" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
+        <div class="upload-box" onclick="document.getElementById('file-input').click();">
+            Нажмите сюда для загрузки файла
+            <input type="file" name="file" id="file-input" style="display:none;" accept="video/*" onchange="handleFileInput()">
+            <div id="file-name-display"></div>
+        </div>
+        <button type="submit" class="button">Загрузить и сжать</button>
+    </form>
+    <div id="loading-message" class="loading">Ваше видео находится в обработке. Пожалуйста, подождите...</div>
+
     <script>
         function handleFileInput() {
             const input = document.getElementById('file-input');
@@ -54,17 +67,5 @@
             loadingMessage.style.display = 'block';
         }
     </script>
-</head>
-<body>
-    <h1>Загрузка видео для сжатия</h1>
-    <form action="/" method="post" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
-        <div class="upload-box" onclick="document.getElementById('file-input').click();">
-            Нажмите сюда для загрузки файла
-            <input type="file" name="file" id="file-input" style="display:none;" accept="video/*" onchange="handleFileInput()">
-            <div id="file-name-display"></div>
-        </div>
-        <button type="submit" class="button">Загрузить и сжать</button>
-    </form>
-    <div id="loading-message" class="loading">Ваше видео находится в обработке. Пожалуйста, подождите...</div>
 </body>
 </html>
