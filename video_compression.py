@@ -65,21 +65,37 @@ def analyze_video_compression(original_video, compressed_video, plot_path):
     plt.legend()
     plt.savefig(plot_path)
 
+import ffmpeg
+
 def compress_video(filename: str, output_filename: str):
-    """Из видеофайла filename делает сжатое видео output_filename с пониженным битрейтом до 2 Мбит/сек"""
-    input_stream = ffmpeg.input(filename)
-    # Применение видеофильтра для изменения контрастности
-    video_stream = input_stream.filter('eq', contrast=5.0)
-    # фильтр накладывается отдельно на video_stream, а не на input_stream, 
-    # Потому что иначе звуковая дорожка пропадает
-    (
-        # Вывод видео с новым битрейтом и сохранением оригинальной аудиодорожки
-        ffmpeg.output(
-            video_stream, input_stream.audio,
-            output_filename,
-            video_bitrate='2M',
-            vcodec='libx264', # дефолтный кодек в ffmpeg, почти как h.264
-            acodec='aac', # тоже дефолтный кодек для аудио
-        )
-        .run()
-    )
+    """
+    Из видеофайла filename делает сжатое видео output_filename 
+    с пониженным битрейтом до 2 Мбит/сек
+    """
+    try:
+        # Пробуем прочитать информацию о видеофайле
+        probe = ffmpeg.probe(filename)
+        
+        # Проверяем наличие аудиопотока (audio stream)
+        has_audio = any(stream['codec_type'] == 'audio' for stream in probe['streams'])
+        
+        # Поток видео
+        input_video = ffmpeg.input(filename)
+        video_stream = input_video.video.filter('eq', contrast=5.0)
+
+        # Настройка параметров вывода
+        output_params = {'video_bitrate': '2M', 'vcodec': 'libx264'}
+        
+        if has_audio:
+            # Если есть аудио, добавляем аудиопоток в выходной файл
+            output_params['acodec'] = 'aac'
+            output_process = ffmpeg.output(video_stream, input_video.audio, output_filename, **output_params)
+        else:
+            # Если аудио нет, выводим только видео
+            output_process = ffmpeg.output(video_stream, output_filename, **output_params)
+        
+        # Запускаем процесс ffmpeg
+        output_process.run(overwrite_output=True)
+    
+    except ffmpeg.Error as e:
+        print('ffmpeg error:', e.stderr.decode())
