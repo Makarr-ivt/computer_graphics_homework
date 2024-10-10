@@ -18,7 +18,7 @@ def allowed_file(filename):
     Проверяет, допустимо ли расширение файла.
     Возвращает True, если расширение файла в списке допустимых.
     """
-    valid_file_extensions = ("avi", "flv", "mov", "mp4", "mpeg", "vob", "wmv", "wmd")
+    valid_file_extensions = ("avi", "flv", "mov", "mp4", "mpeg", "vob", "wmv", "wmd", "gif")
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in valid_file_extensions
 
 @app.route('/', methods=['GET', 'POST'])
